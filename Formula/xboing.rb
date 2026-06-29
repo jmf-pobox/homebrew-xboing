@@ -16,7 +16,7 @@ class Xboing < Formula
   desc "Classic breakout-style arcade game (1993, modernized for SDL2)"
   homepage "https://github.com/jmf-pobox/xboing-c"
   url "https://github.com/jmf-pobox/xboing-c/archive/refs/tags/v0.9.tar.gz"
-  sha256 "5400bba29571225f93a3dfc6881414deb2347a956934459230eac9b6a684ec77"
+  sha256 "01495374fa98f9b029280d628d6129f2308daf51d7b09f059bb473055916d53e"
   license "MIT"
   head "https://github.com/jmf-pobox/xboing-c.git", branch: "master"
 
@@ -34,6 +34,6 @@ class Xboing < Formula
   end
 
   test do
-    assert_path_exists bin/"xboing"
+    assert_match "xboing #{version}", shell_output("#{bin}/xboing -version")
   end
 end
