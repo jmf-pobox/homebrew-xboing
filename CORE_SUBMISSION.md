@@ -11,9 +11,9 @@ Run against this tap's formula:
 ```bash
 brew audit --strict --online --new jmf-pobox/xboing/xboing   # exit 0
 brew style jmf-pobox/xboing/xboing                           # exit 0
-brew install --build-from-source jmf-pobox/xboing/xboing     # builds from the v1.0 tarball
-brew test jmf-pobox/xboing/xboing                            # asserts `xboing -version` -> 1.0
-brew livecheck jmf-pobox/xboing/xboing                       # guessed: 1.0 ==> 1.0 (Git tag strategy)
+brew install --build-from-source jmf-pobox/xboing/xboing     # builds from the v1.0.1 tarball
+brew test jmf-pobox/xboing/xboing                            # asserts `xboing -version` -> 1.0.1
+brew livecheck jmf-pobox/xboing/xboing                       # guessed: 1.0.1 ==> 1.0.1 (Git tag strategy)
 brew audit --strict --online jmf-pobox/xboing/xboing         # exit 0 (installed)
 ```
 
@@ -31,8 +31,8 @@ formula does not ship its own bottles).
   exit 0 with **zero findings**; `brew test` exit 0; `--HEAD` builds clean.
   Runtime journey passed (`xboing -version` correct, `xboing -scores` →
   personal table with no `/var/games` leak, `man xboing` renders, headless
-  dummy-driver launch has no init errors). v1.0 is the same formula (version
-  + sha bump only); `--HEAD` already covered the post-#163 tree that v1.0
+  dummy-driver launch has no init errors). v1.0.1 is the same formula (version
+  + sha bump only); `--HEAD` already covered the post-#163 tree that v1.0.1
   tags. This is the Linux leg core's `test-bot` exercises.
 
 ## The core formula (`Formula/x/xboing.rb`)
@@ -44,8 +44,8 @@ Same as this tap's `Formula/xboing.rb` but **without** the `# typed:` /
 class Xboing < Formula
   desc "Classic breakout-style arcade game (1993, modernized for SDL2)"
   homepage "https://github.com/jmf-pobox/xboing-c"
-  url "https://github.com/jmf-pobox/xboing-c/archive/refs/tags/v1.0.tar.gz"
-  sha256 "b04dad25ddaa1c2ee7088abfb490765fb34bfaf0fed3ff30f23b61da88954b33"
+  url "https://github.com/jmf-pobox/xboing-c/archive/refs/tags/v1.0.1.tar.gz"
+  sha256 "d6b9c30fcf729da5b7a15cac03878f104e8fc90fc74163ce581eabf577c03552"
   license "MIT"
   head "https://github.com/jmf-pobox/xboing-c.git", branch: "master"
 
@@ -84,7 +84,7 @@ brew install --build-from-source xboing
 brew test xboing
 
 # 4. Branch, commit, push to your fork, open the PR
-#    PR title:  xboing 1.0 (new formula)
+#    PR title:  xboing 1.0.1 (new formula)
 ```
 
 ## PR notability justification
