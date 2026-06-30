@@ -21,12 +21,18 @@ brew audit --strict --online jmf-pobox/xboing/xboing         # exit 0 (installed
 three are covered above, and bottles are built by core CI after merge (a new
 formula does not ship its own bottles).
 
-## Still to verify before submitting
+## Cross-platform verification — done
 
-- **Linux build.** Core's `test-bot` builds on Linux; confirm `brew install
-  --build-from-source` succeeds under Homebrew on Linux first to avoid a
-  failed submission. (Apple-silicon macOS verified here; Intel macOS is
-  covered by core CI.)
+- **macOS (Apple silicon)** — `audit --new`, `style`, `install
+  --build-from-source`, `test`, `livecheck` all green (2026-06-29). Intel
+  macOS is covered by core CI.
+- **Linux (Ubuntu 24.04.4, Linuxbrew 6.0.5)** — verified 2026-06-30:
+  `brew install` (stable v0.9) clean; `brew audit --strict --online` exit 0
+  with **zero findings**; `brew test` exit 0; `--HEAD` builds clean. Runtime
+  journey passed (`xboing -version` → `0.9`, `xboing -scores` → personal
+  table with no `/var/games` leak, `man xboing` renders, headless
+  dummy-driver launch has no init errors). This is the Linux leg core's
+  `test-bot` exercises, so no surprises expected at submission.
 
 ## The core formula (`Formula/x/xboing.rb`)
 
@@ -38,7 +44,7 @@ class Xboing < Formula
   desc "Classic breakout-style arcade game (1993, modernized for SDL2)"
   homepage "https://github.com/jmf-pobox/xboing-c"
   url "https://github.com/jmf-pobox/xboing-c/archive/refs/tags/v0.9.tar.gz"
-  sha256 "01495374fa98f9b029280d628d6129f2308daf51d7b09f059bb473055916d53e"
+  sha256 "1df66e097c7b182ce4f7b988a3d8582248036f70b4180c4bde55e0c5936708fc"
   license "MIT"
   head "https://github.com/jmf-pobox/xboing-c.git", branch: "master"
 
@@ -82,19 +88,39 @@ brew test xboing
 
 ## PR notability justification
 
+Paste into the homebrew-core PR description (under the auto-generated checklist):
+
 > **XBoing** is a breakout/blockout arcade game written by Justin C. Kibell
-> for the X Window System between 1993 and 1996 (v2.4 released 22 Nov 1996),
-> distributed via `ftp.x.org/contrib/games`. It was a widely recognized X11
-> game of its era — packaged in Debian (`xboing`) and other distributions
-> for years and a fixture of 1990s/2000s Linux game collections. The
-> original pure-Xlib codebase has been unmaintained for 20+ years.
+> for the X Window System between 1993 and 1997 — version 2.4 shipped on
+> 22 November 1996 and was distributed worldwide via
+> `ftp.x.org/contrib/games`. It became a staple of 1990s/2000s Unix game
+> collections and was packaged across most major distributions:
 >
-> This formula packages the maintained SDL2 modernization — a faithful port
-> preserving all 80 levels, the original ball physics, 30 block types,
-> power-ups, multiball, and the built-in editor — installable on modern
-> macOS and Linux without X11. MIT-licensed, stable v0.9 release.
+> - **Debian** (`xboing`, maintained by the Debian Games Group through
+>   `2.4-31`) and, by inheritance, **Ubuntu**.
+> - **Red Hat Linux** (1996–1997), shipped in the X11R6 `contrib`
+>   collection on the distribution CD-ROMs.
+> - Still carried today by **Gentoo**, **FreeBSD ports**
+>   (`games/xboing`, since ~2002, MIT/X11 license), **NetBSD/pkgsrc**,
+>   **Raspbian**, **ALT Linux**, and **RPM Sphere** (per Repology).
 >
-> On notability: the game is a 30-year-old classic with a long packaging
-> history; this is its canonical maintained continuation. On the repo's
-> youth: the port is new, but it is the actively maintained successor to
-> notable software, not a brand-new project.
+> To be precise: it was widely *packaged* across Unix for 25+ years, not
+> part of any distribution's default install. The original pure-Xlib
+> codebase has been unmaintained since 1997.
+>
+> This formula packages the **maintained SDL2 modernization** — a faithful
+> port preserving all 80 levels, the original ball physics, 30 block types,
+> power-ups, multiball, and the built-in level editor — that installs on
+> modern macOS and Linux with no X11 dependency. MIT-licensed.
+>
+> **On the 0.9 version and the new repository:** the *game* is a 30-year-old
+> classic with a long cross-distribution packaging history; this repository
+> is its canonical maintained continuation, not a brand-new project. The
+> 0.x version tracks the port's progress toward full feature parity, not the
+> maturity of the software it descends from.
+
+Sources for the packaging history (keep handy for maintainer questions, not
+in the PR body): Debian tracker (`tracker.debian.org/pkg/xboing`, last
+`2.4-31`), Ubuntu (`launchpad.net/ubuntu/+source/xboing`), Red Hat 5.2 docs
+(X11R6 contrib), Repology (`repology.org/project/xboing/versions`, 12 repos),
+FreshPorts (`freshports.org/games/xboing`).
