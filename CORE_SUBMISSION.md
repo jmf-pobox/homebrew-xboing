@@ -11,9 +11,9 @@ Run against this tap's formula:
 ```bash
 brew audit --strict --online --new jmf-pobox/xboing/xboing   # exit 0
 brew style jmf-pobox/xboing/xboing                           # exit 0
-brew install --build-from-source jmf-pobox/xboing/xboing     # builds from the v0.9 tarball
-brew test jmf-pobox/xboing/xboing                            # asserts `xboing -version` -> 0.9
-brew livecheck jmf-pobox/xboing/xboing                       # guessed: 0.9 ==> 0.9 (Git tag strategy)
+brew install --build-from-source jmf-pobox/xboing/xboing     # builds from the v1.0 tarball
+brew test jmf-pobox/xboing/xboing                            # asserts `xboing -version` -> 1.0
+brew livecheck jmf-pobox/xboing/xboing                       # guessed: 1.0 ==> 1.0 (Git tag strategy)
 brew audit --strict --online jmf-pobox/xboing/xboing         # exit 0 (installed)
 ```
 
@@ -26,13 +26,14 @@ formula does not ship its own bottles).
 - **macOS (Apple silicon)** — `audit --new`, `style`, `install
   --build-from-source`, `test`, `livecheck` all green (2026-06-29). Intel
   macOS is covered by core CI.
-- **Linux (Ubuntu 24.04.4, Linuxbrew 6.0.5)** — verified 2026-06-30:
-  `brew install` (stable v0.9) clean; `brew audit --strict --online` exit 0
-  with **zero findings**; `brew test` exit 0; `--HEAD` builds clean. Runtime
-  journey passed (`xboing -version` → `0.9`, `xboing -scores` → personal
-  table with no `/var/games` leak, `man xboing` renders, headless
-  dummy-driver launch has no init errors). This is the Linux leg core's
-  `test-bot` exercises, so no surprises expected at submission.
+- **Linux (Ubuntu 24.04.4, Linuxbrew 6.0.5)** — verified 2026-06-30 against
+  v0.9 + `--HEAD`: `brew install` clean; `brew audit --strict --online`
+  exit 0 with **zero findings**; `brew test` exit 0; `--HEAD` builds clean.
+  Runtime journey passed (`xboing -version` correct, `xboing -scores` →
+  personal table with no `/var/games` leak, `man xboing` renders, headless
+  dummy-driver launch has no init errors). v1.0 is the same formula (version
+  + sha bump only); `--HEAD` already covered the post-#163 tree that v1.0
+  tags. This is the Linux leg core's `test-bot` exercises.
 
 ## The core formula (`Formula/x/xboing.rb`)
 
@@ -43,8 +44,8 @@ Same as this tap's `Formula/xboing.rb` but **without** the `# typed:` /
 class Xboing < Formula
   desc "Classic breakout-style arcade game (1993, modernized for SDL2)"
   homepage "https://github.com/jmf-pobox/xboing-c"
-  url "https://github.com/jmf-pobox/xboing-c/archive/refs/tags/v0.9.tar.gz"
-  sha256 "1df66e097c7b182ce4f7b988a3d8582248036f70b4180c4bde55e0c5936708fc"
+  url "https://github.com/jmf-pobox/xboing-c/archive/refs/tags/v1.0.tar.gz"
+  sha256 "b04dad25ddaa1c2ee7088abfb490765fb34bfaf0fed3ff30f23b61da88954b33"
   license "MIT"
   head "https://github.com/jmf-pobox/xboing-c.git", branch: "master"
 
@@ -83,7 +84,7 @@ brew install --build-from-source xboing
 brew test xboing
 
 # 4. Branch, commit, push to your fork, open the PR
-#    PR title:  xboing 0.9 (new formula)
+#    PR title:  xboing 1.0 (new formula)
 ```
 
 ## PR notability justification
@@ -113,11 +114,10 @@ Paste into the homebrew-core PR description (under the auto-generated checklist)
 > power-ups, multiball, and the built-in level editor — that installs on
 > modern macOS and Linux with no X11 dependency. MIT-licensed.
 >
-> **On the 0.9 version and the new repository:** the *game* is a 30-year-old
-> classic with a long cross-distribution packaging history; this repository
-> is its canonical maintained continuation, not a brand-new project. The
-> 0.x version tracks the port's progress toward full feature parity, not the
-> maturity of the software it descends from.
+> **On the repository's youth:** the *game* is a 30-year-old classic with a
+> long cross-distribution packaging history; this repository is its canonical
+> maintained continuation (now at its first **stable 1.0** release), not a
+> brand-new project.
 
 Sources for the packaging history (keep handy for maintainer questions, not
 in the PR body): Debian tracker (`tracker.debian.org/pkg/xboing`, last
