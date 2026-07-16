@@ -15,8 +15,8 @@
 class Xboing < Formula
   desc "Classic breakout-style arcade game (1993, modernized for SDL2)"
   homepage "https://github.com/jmf-pobox/xboing-c"
-  url "https://github.com/jmf-pobox/xboing-c/archive/refs/tags/v1.0.9.tar.gz"
-  sha256 "ff371713cef55ccf26727e528b556feb2a00e6c5c8c7b965f66d7ba8ea179933"
+  url "https://github.com/jmf-pobox/xboing-c/archive/refs/tags/v1.0.10.tar.gz"
+  sha256 "11fa535f7343d7cd5f2aded4414fe378b22092bcf47d06919a6c1d9efef5d8fc"
   license "MIT"
   head "https://github.com/jmf-pobox/xboing-c.git", branch: "master"
 
