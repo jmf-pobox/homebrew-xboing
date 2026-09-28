@@ -15,9 +15,20 @@
 class Xboing < Formula
   desc "Classic breakout-style arcade game (1993, modernized for SDL2)"
   homepage "https://github.com/jmf-pobox/xboing-c"
-  url "https://github.com/jmf-pobox/xboing-c/archive/refs/tags/v1.0.11.tar.gz"
-  sha256 "b9d1dc551b8c760a80f1e2c8d72452f8e8d407eb13c8843853c6bfa5821d2975"
+  url "https://github.com/jmf-pobox/xboing-c/archive/refs/tags/v1.0.12.tar.gz"
+  sha256 "6a72bd28ee80564c3fbd06961ada3db6494cdf4ee272d6b6d4884943f0d70107"
   license "MIT"
+
+  # Prebuilt bottles built + verified by release.yml on the v1.0.12 tag
+  # (macOS arm64, Linux x86_64/aarch64). Unbottled platforms fall back to
+  # the source build below automatically.
+  bottle do
+    root_url "https://github.com/jmf-pobox/xboing-c/releases/download/v1.0.12"
+    sha256 cellar: "/home/linuxbrew/.linuxbrew/Cellar", arm64_linux: "eccba0cac96b87149d205dd789ab2ef57c5dc74dbcb9063480d03e72720a06bb"
+    sha256 cellar: "/opt/homebrew/Cellar", arm64_sonoma: "6f92bfbec500af2b16f5efd64dfed124f4c3eeea3c7b40ad10fbe20a78186137"
+    sha256 cellar: "/home/linuxbrew/.linuxbrew/Cellar", x86_64_linux: "967dc504cf81b2fe5d38ece3411a8b441509bc53d8c92727cd6e21939ae94c8a"
+  end
+
   head "https://github.com/jmf-pobox/xboing-c.git", branch: "master"
 
   depends_on "cmake" => :build
